@@ -3,8 +3,6 @@ Objective
 - Make script execution fully staged (no module loads all at once), including gradual config application.
 
 Important Details
-- Target file: C:\Users\kee\Downloads\Nullscape-Framework\null_juanitahaxx.lua (~2270 lines). Git repo exists at C:\Users\kee\Downloads\Nullscape-Framework (use git diff --stat there).
-- Syntax verification: no lua/python on machine; use Node (v24.19.0) with luaparse via node check.js "<file>" from workdir C:\Users\kee\AppData\Local\Temp\opencode\luacheck. check.js applies Luau→Lua transforms (compound +=/-=, continue→do end, if-expressions→nil); expect output "SYNTAX OK / compoundOps: 30, continues: 8, ifExprs: 3".
 - Charge-noclip ROOT CAUSE (user-confirmed fixed): game leaves root.CanCollide=false + AutoRotate=false after charge; silent Heartbeat guard enforces both every frame when autoFixCharge=true (~:1965). Do NOT regress this.
 - juanitahaxx Library (remote loadstring, audited): has zero physics code; BUT element constructors fire callbacks with defaults during build, AND Keybind constructors fire their action callbacks at build time (confirmed by user's log: teleport-to-beacon fired, 6× "No enemies available", 5× "Already collecting").
 - Autoload: library replays shared juanitaaaaaaa/autoload.json synchronously in Window:Init(). Current design: capture into savedAutoload, blank file before Init, restore file after, never auto-replay; manual Debug button "Load Saved Config Now" → applyConfigStaged(savedAutoload) (one setting per frame).
