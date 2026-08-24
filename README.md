@@ -1,3 +1,48 @@
+What It Is
+
+Nullscape GUI is a client-side mod menu for the Roblox game Nullscape, built on the juanitahaxx UI Library (by samet, design by eskolzz). The script is loaded via an executor, downloads the UI library remotely, and renders an in-game window ("Nullscape GUI") with nine feature pages, global keybinds, and background automation loops. It also integrates with the game's remotes (gift magnet, upgrades, enemy notifications) and replicates server-trusted behaviors locally where possible.
+The project folder contains the ported script (null_juanitahaxx.lua) and the original pre-port version (null.lua) kept for reference.
+What It Does
+On execution it verifies the place ID, guards against duplicate execution, loads the UI library, then builds its modules staged (one per frame) so nothing bursts at load time. Background listeners and the movement-safety guard come online first; pages stream in after. Saved configs are applied gradually rather than in one synchronous burst.
+
+Features
+Main — Gift Collection
+- Auto-collect Normal / Golden gifts with tween pathing that avoids active tripmines and enemies
+- Collection range slider (drives the game's gift magnet remote) + reset
+- Live counters: Gifts, Golden Gifts, Passage Gifts, Tripmines (value + attribute synced)
+
+Upgrades
+- Add/Remove ~21 client-side upgrades (Adrenaline, Double Jump, Gift Magnet, Radar suites, wings, etc.) via firesignal spoofing of the upgrade remote
+
+Enemy Management
+- Disable / Break AI / Destroy all enemies, or client-side ones only
+- Per-enemy auto-handling toggles (Auto Disable, Auto Break AI, Auto Destroy) for Bell, Mart, Husk, Springer, ICBM, Baby, Flesh, Telefragger, Celestial, Cadence, Voidbound Baby…
+- "Add Enemy" spawner (Kolona, Operator, Voidbreaker, Scrapmaw, Husk) for next round
+- Guardian bullet protection (repels/pushes player out of bullet radii)
+
+Map Utilities
+- Anti-Void: teleport-to-spawn, launch-up (adjustable power), or snap-to-closest-gift when falling into the void
+- Visible Void, altar finder/teleporter/activator, tripmine protection bubbles, seamine & void-implosion disabling, fake-beacon destruction
+- Tile modifier: auto-remove ice/flesh floor tiles
+- Pylon (Bloom) selector + teleporter
+
+Player
+- WalkSpeed / JumpPower overrides with sliders, watchers, and stat restoration on toggle-off
+- Visible hitbox, Razorbloom destroyer
+
+Visuals
+- Closest-gift tracer ESP, Medal ESP, Cadence instrument ESP (adornments + off-screen clamped tracers)
+- FOV slider, velocity vector visualizer
+
+Keybinds
+13 actions bound by default (N/0/Eight/H/J/T/Y/Two/Q/LeftAlt/Home/Insert/End) each with individual enable toggles — collecting, medal grab, enemy wipes, pad/orb bringers, instant grapple, glider fly-hold, spawn/beacon teleports, cancel-collecting.
+
+Debug / Safety
+- Copy lobby code, kill character, rejoin, panic-unload (full teardown of connections, drawings, instances)
+- Charge-noclip guard: silently re-enforces root.CanCollide / AutoRotate every frame (fixes the game's stuck charge state)
+- Manual movement repair + full diagnostics dump (humanoid state, collision groups, network owner, ground probe)
+- Place-ID check with native Roblox notification if executed in the wrong game
+
 Objective
 - Fix all bugs in the Roblox executor script null_juanitahaxx.lua (a juanitahaxx UI library port for the game Nullscape), including a persistent charge-noclip movement bug.
 - Make script execution fully staged (no module loads all at once), including gradual config application.
